@@ -37,9 +37,10 @@ function getAllowedOrigins() {
 function applyCors(req, res) {
   const origin = req.headers.origin || '';
   const allowed = getAllowedOrigins();
-  const allowOrigin = allowed.includes(origin) ? origin : allowed[0];
-  res.setHeader('Access-Control-Allow-Origin', allowOrigin);
   res.setHeader('Vary', 'Origin');
+  if (origin && allowed.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Cache-Control', 'no-store');
@@ -97,6 +98,7 @@ function normalizePayload(payload, req) {
 
 async function ensureSchema(client) {
   if (schemaReady) return;
+  // Table must exist before the ALTER and indexes — run first, then parallelize the rest.
   await client.query(`
     CREATE TABLE IF NOT EXISTS smm_feedback (
       id uuid PRIMARY KEY,
@@ -117,11 +119,13 @@ async function ensureSchema(client) {
       reviewer_note text
     )
   `);
-  await client.query(`ALTER TABLE smm_feedback ADD COLUMN IF NOT EXISTS category text`);
-  await client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_created_at_idx ON smm_feedback (created_at DESC)`);
-  await client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_status_idx ON smm_feedback (status)`);
-  await client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_source_idx ON smm_feedback (source)`);
-  await client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_category_idx ON smm_feedback (category)`);
+  await Promise.all([
+    client.query(`ALTER TABLE smm_feedback ADD COLUMN IF NOT EXISTS category text`),
+    client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_created_at_idx ON smm_feedback (created_at DESC)`),
+    client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_status_idx ON smm_feedback (status)`),
+    client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_source_idx ON smm_feedback (source)`),
+    client.query(`CREATE INDEX IF NOT EXISTS smm_feedback_category_idx ON smm_feedback (category)`),
+  ]);
   schemaReady = true;
 }
 

@@ -14,7 +14,8 @@
 
   function classifyGap(text) {
     const t = (text || '').toLowerCase();
-    if (/choose|decide|which|pick|option|between|vs\.|or\b/.test(t)) return 'decision';
+    // Note: 'or\b' was removed \u2014 it matched "for" in nearly every sentence.
+    if (/choose|decide|which|pick|option|between|vs\./.test(t)) return 'decision';
     if (/can\u2019?t|cannot|blocked|stuck|access|locked|won\u2019?t let/.test(t)) return 'barrier';
     if (/role|supposed to|expected|how do i|new here|onboard/.test(t)) return 'role';
     if (/lost|no idea|where to start|overwhelm|disorient/.test(t)) return 'spinout';
@@ -30,8 +31,12 @@
     const match = samples.find(s => {
       const o = s.original.toLowerCase();
       const tokens = o.replace(/[^a-z\s]/g, '').split(/\s+/).filter(w => w.length > 4);
+      if (tokens.length < 3) return false;
       const hits = tokens.filter(w => t.includes(w)).length;
-      return hits >= Math.max(2, Math.floor(tokens.length * 0.4));
+      // Require 75% of qualifying tokens to match AND at least 3 hits.
+      // The old 40% threshold caused false positives (e.g. "recommend" + "friend"
+      // in an unrelated question matching the NPS example).
+      return hits >= Math.max(3, Math.ceil(tokens.length * 0.75));
     });
     return match || null;
   }
@@ -107,6 +112,7 @@
   async function submitFeedback(result, type, comment) {
     const payload = {
       type: type,
+      category: type,  // mirrors type so the category index is queryable
       question: result.original || '',
       rewrite: result.rewrite || '',
       gap: result.gap || '',
@@ -144,7 +150,6 @@
     if (cls) e.className = cls;
     if (attrs) Object.keys(attrs).forEach(k => {
       if (k === 'text') e.textContent = attrs[k];
-      else if (k === 'html') e.innerHTML = attrs[k];
       else e.setAttribute(k, attrs[k]);
     });
     return e;

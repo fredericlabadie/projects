@@ -20,9 +20,10 @@ function getAllowedOrigins() {
 function applyCors(req, res) {
   const origin = req.headers.origin || '';
   const allowed = getAllowedOrigins();
-  const allowOrigin = allowed.includes(origin) ? origin : allowed[0];
-  res.setHeader('Access-Control-Allow-Origin', allowOrigin);
   res.setHeader('Vary', 'Origin');
+  if (origin && allowed.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Cache-Control', 'no-store');
@@ -49,6 +50,10 @@ function readBody(req) {
   });
 }
 
+// Legacy shim: old callers sent { prompt } using a chat-template format from
+// earlier LLaMA/Mistral models (<|user|>…<|assistant|>). The current frontend
+// always sends { question }, so this path is only hit by direct API clients
+// using the old format. Do not remove until confirmed no callers remain.
 function extractQuestionFromPrompt(prompt) {
   const text = String(prompt || '');
   const userMatch = text.match(/<\|user\|>\s*([\s\S]*?)(?:<\|assistant\|>|$)/i);
@@ -152,6 +157,7 @@ async function callHuggingFace(question) {
         { role: 'user', content: question },
       ],
     }),
+    signal: AbortSignal.timeout(18_000),
   });
 
   const responseText = await response.text();
