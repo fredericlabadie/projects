@@ -4,6 +4,7 @@ project:
   resources:
     - assets/**
     - robots.txt
+    - sitemap.xml
   render:
     - index.qmd
     - bridge.qmd
