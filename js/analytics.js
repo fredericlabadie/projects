@@ -7,7 +7,7 @@
   function track(event, props) {
     const amp = window._amplitude;
     if (!amp) return;
-    amp.track(event, props);
+    amp.track(event, { domain: window.location.hostname, ...props });
   }
 
   function setOnce(key, value) {
