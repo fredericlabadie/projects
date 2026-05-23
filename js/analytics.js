@@ -7,7 +7,7 @@
   function track(event, props) {
     const amp = window._amplitude;
     if (!amp) return;
-    amp.track(event, { domain: window.location.hostname, ...props });
+    amp.track(event, { Domain: window.location.hostname, ...props });
   }
 
   function setOnce(key, value) {
@@ -81,11 +81,11 @@
       const elapsed = Math.round((Date.now() - start) / 1000);
       if (elapsed >= THRESHOLD) {
         fired = true;
-        track("Content Engaged", {
-          content_area: contentArea(),
-          page_path: path(),
-          engagement_seconds: String(elapsed),
-          engagement_threshold_seconds: String(THRESHOLD),
+        track("contentEngaged", {
+          ContentArea: contentArea(),
+          PagePath: path(),
+          EngagementSeconds: String(elapsed),
+          EngagementThresholdSeconds: String(THRESHOLD),
         });
       }
     };
@@ -110,12 +110,12 @@
         } catch {
           return;
         }
-        track("Reference Opened", {
-          content_area: contentArea(),
-          page_path: path(),
-          reference_url: href,
-          reference_domain: domain,
-          reference_label: link.textContent?.trim() || "",
+        track("referenceOpened", {
+          ContentArea: contentArea(),
+          PagePath: path(),
+          ReferenceUrl: href,
+          ReferenceDomain: domain,
+          ReferenceLabel: link.textContent?.trim() || "",
         });
       });
     });

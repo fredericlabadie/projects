@@ -244,9 +244,9 @@
         textarea.dispatchEvent(new Event("input"));
         lastPresetLabel = ex.label;
         if (window._smmTrack)
-          window._smmTrack("Rewrite Preset Selected", {
-            preset_label: ex.label,
-            page_path: window.location.pathname,
+          window._smmTrack("rewritePresetSelected", {
+            PresetLabel: ex.label,
+            PagePath: window.location.pathname,
           });
         runRewrite();
       };
@@ -266,8 +266,8 @@
       if (!hasStarted && textarea.value.trim()) {
         hasStarted = true;
         if (window._smmTrack)
-          window._smmTrack("Rewriter Started", {
-            page_path: window.location.pathname,
+          window._smmTrack("rewriterStarted", {
+            PagePath: window.location.pathname,
           });
       }
     });
@@ -277,9 +277,9 @@
     btnRun.onclick = runRewrite;
     btnClear.onclick = () => {
       if (window._smmTrack)
-        window._smmTrack("Rewrite Cleared", {
-          had_result: String(!!lastResult),
-          page_path: window.location.pathname,
+        window._smmTrack("rewriteCleared", {
+          HadResult: String(!!lastResult),
+          PagePath: window.location.pathname,
         });
       textarea.value = "";
       btnRun.disabled = true;
@@ -308,12 +308,12 @@
       requestStart = Date.now();
       lastPresetLabel = lastPresetLabel || null;
       if (window._smmTrack)
-        window._smmTrack("Rewrite Requested", {
-          request_id: currentRequestId,
-          question_length_chars: String(q.length),
-          source_type: lastPresetLabel ? "preset" : "manual",
-          preset_label: lastPresetLabel || "",
-          page_path: window.location.pathname,
+        window._smmTrack("rewriteRequested", {
+          RequestId: currentRequestId,
+          QuestionLengthChars: String(q.length),
+          SourceType: lastPresetLabel ? "preset" : "manual",
+          PresetLabel: lastPresetLabel || "",
+          PagePath: window.location.pathname,
         });
 
       let result;
@@ -346,14 +346,14 @@
       btnCopy.style.display = "inline-block";
       renderResult(result);
       if (window._smmTrack)
-        window._smmTrack("Rewrite Completed", {
-          request_id: currentRequestId,
-          result_source: result.source || "ai",
-          gap_label: result.gap || "",
-          latency_ms: String(Date.now() - requestStart),
-          question_length_chars: String(q.length),
-          rewrite_length_chars: String((result.rewrite || "").length),
-          page_path: window.location.pathname,
+        window._smmTrack("rewriteCompleted", {
+          RequestId: currentRequestId,
+          ResultSource: result.source || "ai",
+          GapLabel: result.gap || "",
+          LatencyMs: String(Date.now() - requestStart),
+          QuestionLengthChars: String(q.length),
+          RewriteLengthChars: String((result.rewrite || "").length),
+          PagePath: window.location.pathname,
         });
     }
 
@@ -439,13 +439,13 @@
           await submitFeedback(r, "useful", "");
           status.textContent = "Thanks — feedback recorded.";
           if (window._smmTrack)
-            window._smmTrack("Academic Feedback Submitted", {
-              feedback_type: "useful",
-              gap_label: r.gap || "",
-              rewrite_source: r.source || "ai",
-              page_path: window.location.pathname,
+            window._smmTrack("academicFeedbackSubmitted", {
+              FeedbackType: "useful",
+              GapLabel: r.gap || "",
+              RewriteSource: r.source || "ai",
+              PagePath: window.location.pathname,
             });
-        } catch (err) {
+        } catch {
           status.textContent = "Feedback could not be sent.";
         }
       };
@@ -467,11 +467,11 @@
           form.style.display = "none";
           comment.value = "";
           if (window._smmTrack)
-            window._smmTrack("Academic Feedback Submitted", {
-              feedback_type: fbType,
-              gap_label: r.gap || "",
-              rewrite_source: r.source || "ai",
-              page_path: window.location.pathname,
+            window._smmTrack("academicFeedbackSubmitted", {
+              FeedbackType: fbType,
+              GapLabel: r.gap || "",
+              RewriteSource: r.source || "ai",
+              PagePath: window.location.pathname,
             });
         } catch (err) {
           status.textContent = "Feedback could not be sent.";
