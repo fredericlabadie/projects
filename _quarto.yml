@@ -9,7 +9,7 @@ project:
     - theory.qmd
     - method.qmd
     - fieldwork.qmd
-    
+
 website:
   title: "Sense-Making Methodology"
   site-url: "https://smm.fredericlabadie.com"
@@ -37,6 +37,8 @@ format:
       sidebar-width: 0px
     include-in-header:
       - text: |
+          <script type="module" src="/js/amplitude-init.js"></script>
+          <script src="/js/analytics.js" defer></script>
           <meta property="og:site_name" content="Sense-Making Methodology">
           <meta property="og:title" content="Sense-Making Methodology — A Practitioner Guide to Brenda Dervin’s Work">
           <meta property="og:description" content="A public study guide and working instrument for applying Brenda Dervin’s Sense-Making Methodology to UX research, analytics, interviews, and better research questions.">
