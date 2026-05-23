@@ -4,15 +4,19 @@
 (function () {
   "use strict";
 
+  function hasAnalyticsConsent() {
+    return window.Cookiebot?.consent?.statistics === true;
+  }
+
   function track(event, props) {
     const amp = window._amplitude;
-    if (!amp) return;
+    if (!amp || !hasAnalyticsConsent()) return;
     amp.track(event, { Domain: window.location.hostname, ...props });
   }
 
   function setOnce(key, value) {
     const amp = window._amplitude;
-    if (!amp) return;
+    if (!amp || !hasAnalyticsConsent()) return;
     const id = new amp.Identify();
     id.setOnce(key, value);
     amp.identify(id);
@@ -20,7 +24,7 @@
 
   function setProp(key, value) {
     const amp = window._amplitude;
-    if (!amp) return;
+    if (!amp || !hasAnalyticsConsent()) return;
     const id = new amp.Identify();
     id.set(key, value);
     amp.identify(id);
@@ -41,7 +45,7 @@
 
   function initUserProperties() {
     const amp = window._amplitude;
-    if (!amp) return;
+    if (!amp || !hasAnalyticsConsent()) return;
 
     const p = path();
     const ref = document.referrer;
@@ -125,7 +129,7 @@
 
   function inferIntent() {
     const amp = window._amplitude;
-    if (!amp) return;
+    if (!amp || !hasAnalyticsConsent()) return;
     const area = contentArea();
     let intent = "content";
     if (area === "home") intent = "exploration";
