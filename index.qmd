@@ -4,6 +4,8 @@ pagetitle: "Sense-Making Methodology — Practitioner Guide & Question Rewriter"
 description: "A public study guide and working instrument for applying Brenda Dervin’s Sense-Making Methodology to UX research, analytics, interviews, and better research questions."
 ---
 
+{{< include _includes/schema-index.html >}}
+
 ```{=html}
 <div class="smm-callout" id="smm-callout">
   <img src="assets/svg/icons/callout-sprout.svg" width="16" height="16" alt="" aria-hidden="true">

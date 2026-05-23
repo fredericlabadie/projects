@@ -2,6 +2,8 @@
 pagetitle: "Theory — The Central Metaphor"
 ---
 
+{{< include _includes/schema-theory.html >}}
+
 {{< include theory/01-hero.qmd >}}
 {{< include theory/06-sgbo.qmd >}}
 {{< include theory/02-assumptions.qmd >}}

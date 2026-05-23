@@ -2,6 +2,8 @@
 pagetitle: "Fieldwork — From the Field"
 ---
 
+{{< include _includes/schema-fieldwork.html >}}
+
 ```{=html}
 <div class="page-head">
   <div class="page-eyebrow">

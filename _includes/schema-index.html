@@ -1,0 +1,64 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://fredericlabadie.com/#person",
+      "name": "Frederic Labadie",
+      "url": "https://fredericlabadie.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://smm.fredericlabadie.com/#website",
+      "name": "Sense-Making Methodology",
+      "url": "https://smm.fredericlabadie.com/",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://fredericlabadie.com/#person" }
+    },
+    {
+      "@type": "Course",
+      "@id": "https://smm.fredericlabadie.com/#course",
+      "name": "Sense-Making Methodology",
+      "description": "A public study guide and working instrument for applying Brenda Dervin's Sense-Making Methodology to UX research, analytics, interviews, and better research questions.",
+      "url": "https://smm.fredericlabadie.com/",
+      "inLanguage": "en",
+      "provider": { "@id": "https://fredericlabadie.com/#person" },
+      "creator": { "@id": "https://fredericlabadie.com/#person" },
+      "about": [
+        "Sense-Making Methodology",
+        "Brenda Dervin",
+        "UX research",
+        "research questions",
+        "analytics"
+      ],
+      "hasPart": [
+        { "@id": "https://smm.fredericlabadie.com/bridge.html#webpage" },
+        { "@id": "https://smm.fredericlabadie.com/theory.html#webpage" },
+        { "@id": "https://smm.fredericlabadie.com/method.html#webpage" },
+        { "@id": "https://smm.fredericlabadie.com/fieldwork.html#webpage" }
+      ]
+    },
+    {
+      "@type": ["WebPage", "LearningResource"],
+      "@id": "https://smm.fredericlabadie.com/#webpage",
+      "url": "https://smm.fredericlabadie.com/",
+      "name": "Sense-Making Methodology - Practitioner Guide & Question Rewriter",
+      "description": "A public study guide and working instrument for applying Brenda Dervin's Sense-Making Methodology to UX research, analytics, interviews, and better research questions.",
+      "isPartOf": { "@id": "https://smm.fredericlabadie.com/#website" },
+      "about": { "@id": "https://smm.fredericlabadie.com/#course" },
+      "mainEntity": { "@id": "https://smm.fredericlabadie.com/#course" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://smm.fredericlabadie.com/#question-rewriter",
+      "name": "SMM Question Rewriter",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "url": "https://smm.fredericlabadie.com/",
+      "isPartOf": { "@id": "https://smm.fredericlabadie.com/#course" }
+    }
+  ]
+}
+</script>

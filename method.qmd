@@ -2,6 +2,8 @@
 pagetitle: "Method — Gap Pictures for Practice"
 ---
 
+{{< include _includes/schema-method.html >}}
+
 ```{=html}
 <div class="page-head">
   <div class="page-eyebrow">
