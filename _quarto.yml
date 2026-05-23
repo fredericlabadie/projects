@@ -3,6 +3,7 @@ project:
   output-dir: _site
   resources:
     - assets/**
+    - robots.txt
   render:
     - index.qmd
     - bridge.qmd
