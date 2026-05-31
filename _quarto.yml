@@ -40,6 +40,7 @@ format:
       sidebar-width: 0px
     include-in-header:
       - text: |
+          <meta name="robots" content="noindex, nofollow">
           <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d8d8cb40-e8e6-4ca0-852d-bfb6cd1aac42" data-blockingmode="auto" type="text/javascript"></script>
           <script type="module" src="/js/amplitude-init.js"></script>
           <script src="/js/analytics.js" defer></script>
