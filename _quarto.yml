@@ -41,7 +41,8 @@ format:
     include-in-header:
       - text: |
           <meta name="robots" content="noindex, nofollow">
-          <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d8d8cb40-e8e6-4ca0-852d-bfb6cd1aac42" data-blockingmode="auto" type="text/javascript"></script>
+          <script>window.FLConsentConfig = { appId: "smm", appName: "Sense-Making Methodology", cookieName: "fl_consent_smm", bannerText: "This guide uses necessary storage to remember this choice. With your permission, it also uses Amplitude analytics to understand which sections are read. Analytics is optional — you can decline and still use the guide.", theme: "light" };</script>
+          <script src="https://fredericlabadie.com/js/fl-consent.js"></script>
           <script type="module" src="/js/amplitude-init.js"></script>
           <script src="/js/analytics.js" defer></script>
           <meta property="og:site_name" content="Sense-Making Methodology">

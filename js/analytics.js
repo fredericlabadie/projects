@@ -5,7 +5,7 @@
   "use strict";
 
   function hasAnalyticsConsent() {
-    return window.Cookiebot?.consent?.statistics === true;
+    return window.FLConsent?.hasAnalytics() === true;
   }
 
   function track(event, props) {
