@@ -154,15 +154,17 @@
 
   // ── Init ─────────────────────────────────────────────────────────────────────
 
+  function initUserPropertiesIfReady() {
+    if (!window._amplitude) return;
+    initUserProperties();
+    inferIntent();
+    recordFirstContentArea();
+  }
+
   function init() {
-    // Wait a tick for amplitude-init.js module to finish binding window._amplitude
-    setTimeout(() => {
-      initUserProperties();
-      inferIntent();
-      recordFirstContentArea();
-      attachContentEngagement();
-      attachReferenceTracking();
-    }, 0);
+    attachContentEngagement();
+    attachReferenceTracking();
+    initUserPropertiesIfReady();
   }
 
   if (document.readyState === "loading") {
@@ -170,4 +172,7 @@
   } else {
     init();
   }
+
+  // New visitor who accepts mid-session: amplitude-init.js fires this after load.
+  window.addEventListener("FLAmplitudeReady", initUserPropertiesIfReady);
 })();
